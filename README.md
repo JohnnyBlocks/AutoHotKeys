@@ -12,7 +12,9 @@ My Collection of AHK Scripts
 
 * **SetMic50.ahk** - Forces Mic input to 50% - Windows would auto adjust (in error) and the gain would go up to 100 and the sound would clip and sound terrible.  Was a Win8.1 issue that went away when I upgraded to Win10.
 
-* **PushToTalk.ahk** - Binds Push to Talk functionality to the Capslock key, making the mic muted unless Capslock is held down.  System Tray icon for visual indicator as well as audio feed back when you start and stop transmitting	
+* **PushToTalk.ahk** - Binds Push to Talk functionality to the Capslock key, making the mic Muted unless Capslock is held down.  System Tray icon for visual indicator as well as audio feed back when you start and stop transmitting	
+
+* **PushToMute.ahk** - Binds Push to Mute functionality to the Capslock key, making the mic Live unless Capslock is held down.  System Tray icon for visual indicator as well as audio feed back when you start and stop muting	
 
 
 
