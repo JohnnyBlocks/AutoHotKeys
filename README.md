@@ -17,7 +17,7 @@ My Collection of AHK Scripts
 * **PushToMute.ahk** - Binds Push to Mute functionality to the Capslock key, making the mic Live unless Capslock is held down.  System Tray icon for visual indicator as well as audio feed back when you start and stop muting	
 
 
-* **AlwaysOnTop.ahk** - CTRL + Space to make current window always on top, adds SysTray icon to turn on or off 'always-on-top'	
+* **AlwaysOnTop.ahk** - CTRL+Space to make current window always on top, adds SysTray icon to turn on or off 'always-on-top'	
 
 
 
