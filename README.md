@@ -19,7 +19,7 @@ My Collection of AHK Scripts
 
 * **AlwaysOnTop.ahk** - CTRL+Space to make current window always on top, adds SysTray icon to turn on or off 'always-on-top'	
 
-
+* **VLC.ahk** - Hides Titlebar for VLC to run as borderless window mode
 
 ### Scripts from AHK Community ###
 
