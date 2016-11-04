@@ -36,65 +36,60 @@ lastFile = none;
 GetSpotifyInfo:
 	WinGetTitle, spotify_playing, %spotify% ;Get the title of Spotify which contains the track-name
 	now_playing=%spotify_playing%
+	notPlaying=Spotify
+	notStarted=
+	if(spotify_playing == notStarted) {
+		ListeningTo = Spotify is not Started
+		artwork =  spotify.png
+	} else if(spotify_playing == notPlaying) {
+		ListeningTo = Spotify : Nothing is Playing
+		artwork =  spotify.png
+	} else  {
 		
-		
-	if(lastfile  == spotify_playing) {
-		state =  Equal %lastfile% %spotify_playing%
-	} else {
-		state =  Not %lastfile% %spotify_playing%
+		if(lastfile != spotify_playing) {
+			;split name to artist and track title...
+			StringReplace, now_playing, now_playing, &, and
+			StringReplace, now_playing, now_playing, %A_SPACE%-%A_SPACE%, *
+			StringSplit, now_playing, now_playing, *
 
-		;split name to artist and track title...
-		StringReplace, now_playing, now_playing, &, and
-		StringReplace, now_playing, now_playing, %A_SPACE%-%A_SPACE%, *
-		StringSplit, now_playing, now_playing, *
-
-		;MsgBox %spotify_playing% | artist=%now_playing1%&track=%now_playing2%
-
-			  
-		;download info from last.fm
-		tempfile = %temp%\LFinfo
-		urldownloadtofile, http://ws.audioscrobbler.com/2.0/?method=track.getinfo&api_key=b25b959554ed76058ac220b7b2e0a026&artist=%now_playing1%&track=%now_playing2%, %tempfile%
-		fileRead, LFinfo, %tempfile%
-		;MsgBox,%LFinfo%
-		FileDelete, %tempfile%
-			  
-		; get album name	  
-		album:= RegExReplace(LFinfo, ".*<title>(.*)</title>.*","$1")
-		ListeningTo=%now_playing1% : %album% : %now_playing2%
-		IfInString, album, <?xml
+			;download info from last.fm
+			tempfile = %temp%\LFinfo
+			urldownloadtofile, http://ws.audioscrobbler.com/2.0/?method=track.getinfo&api_key=b25b959554ed76058ac220b7b2e0a026&artist=%now_playing1%&track=%now_playing2%, %tempfile%
+			fileRead, LFinfo, %tempfile%
+			;MsgBox,%LFinfo%
+			FileDelete, %tempfile%
+				  
+			; get album name	  
+			album:= RegExReplace(LFinfo, ".*<title>(.*)</title>.*","$1")
+			StringReplace, album, album, amp;, &
+			ListeningTo=%now_playing1% : %album% : %now_playing2%
+			IfInString, album, <?xml
+				{
+					 ListeningTo=%now_playing1% : %now_playing2%
+				}   
+			     			 
+			; get album art...
+			artURL:= RegExReplace(LFinfo, ".*<image size=""medium"">(.*)</image>.*","$1")
+			artURL:= RegExReplace(artURL, "</image>.*")
+			;MsgBox, %artURL%
+			IfInString, artURL, <?xml
 			{
-				 ListeningTo=%now_playing1% : %now_playing2%
-			}   
-		     
-		     
-		     
-		
-		     
-		     
-		; get album art...
-		artURL:= RegExReplace(LFinfo, ".*<image size=""medium"">(.*)</image>.*","$1")
-		artURL:= RegExReplace(artURL, "</image>.*")
-		;MsgBox, %artURL%
-		IfInString, artURL, <?xml
-		{
-		    artwork =  spotify.png    
-		}
-		else	 
-		{	  
-			urldownloadtofile, %artURL%, %tempfile%
-			artwork = %tempfile%	
-		}
-		
-		if(lastfile == artwork) {
-				;MsgBox same '%lastfile%' == '%artwork%'
-			} else {
-				;MsgBox different '%lastfile%' == '%artwork%'
+			    artwork =  spotify.png    
 			}
-		
-		lastfile=%artwork%
-		filedelete, %tempfile%.jpg
-
-			  
+			else	 
+			{	  
+				urldownloadtofile, %artURL%, %tempfile%
+				artwork = %tempfile%	
+			}
+			if(artURL = "") {
+				 artwork =  spotify.png    
+			}
+			filedelete, %tempfile%.jpg
+		}
+	}	  
+	
+	
+	if(lastfile != spotify_playing) {	
 		#SingleInstance force
 		Gui, NowPlaying: New,, nowPlaying
 		Gui,+AlwaysOnTop -Caption  +ToolWindow  +E0x08000000
