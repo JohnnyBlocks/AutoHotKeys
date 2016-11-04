@@ -6,6 +6,22 @@ DetectHiddenWindows, On ;Detect Spotify even if it's minimized
 DetectHiddenText, On
 spotify = ahk_class SpotifyMainWindow ;Set variable for Spotify Window Name
 
+
+
+
+
+
+ScreenWidth=1920
+ScreenHeight=1200
+
+
+
+
+
+
+
+
+
 Menu, Tray, NoStandard
 Menu, Tray, Add, Spotify Now Playing,  GetSpotifyInfo
 Menu, Tray, Default ,Spotify Now Playing
@@ -97,8 +113,11 @@ GetSpotifyInfo:
 		WinSet, TransColor, D1DFEC
 		Gui, +LastFound
 		ControlGetPos ,,GuiHeight2, GuiWidth2
-		Xpos := (A_ScreenWidth- GuiWidth2 - 80)
-		Ypos := (A_ScreenHeight - GuiHeight2 - 20)
+		SysGet, VirtualWidth, 78
+		SysGet, VirtualHeight, 79
+		
+		Xpos := (ScreenWidth - GuiWidth2 - 80)
+		Ypos := (ScreenHeight - 70)
 		Gui, NowPlaying: show, NoActivate  x%Xpos% y%Ypos%	 
 		lastFile = %spotify_playing%
 	}
