@@ -3,6 +3,10 @@ My Collection of AHK Scripts
 
 ### Scipts I Coded ###
 
+* **NowPlaying.ahk** - Displays Spotify's Current Track in the Lower Right corner of a monitor.  (Specify Monitor in script)
+![Example Screen Shot](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Example Screen Shot")
+
+
 * **Autoclick.ahk** - Sends a mouse click every 300ms if Capslock is on - Was used to auto click to get into RUST servers before the queue system was created.
 	
 * **ClickFast.ahk** - Clicks every 10ms when F8 is pressed - Was used for the Steam Summer Sale to get wormhole badge.

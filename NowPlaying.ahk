@@ -8,19 +8,13 @@ spotify = ahk_class SpotifyMainWindow ;Set variable for Spotify Window Name
 
 
 
+MonitorNumber = 1
 
 
 
-ScreenWidth=1920
-ScreenHeight=1200
-
-
-
-
-
-
-
-
+SysGet, Mon1, Monitor, MonitorNumber
+ScreenWidth=%Mon1Right%
+ScreenHeight=%Mon1Bottom%
 
 Menu, Tray, NoStandard
 Menu, Tray, Add, Spotify Now Playing,  GetSpotifyInfo
