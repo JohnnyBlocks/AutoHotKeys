@@ -53,12 +53,13 @@ GetMusicInfo:
 	
 			notPlaying=Spotify
 			notStarted=
+			artwork =  spotify.png
 			if(app_playing == notStarted) {
 				ListeningTo = Spotify is not Started
-				artwork =  spotify.png
+				artwork =  ;
 			} else if(app_playing == notPlaying) {
-				ListeningTo = Spotify : Nothing is Playing
-				artwork =  spotify.png
+				ListeningTo = Nothing is Playing
+				artwork = ;
 			} else  {
 				;split name to artist and track title...
 				StringReplace, now_playing, now_playing, &, and
