@@ -25,7 +25,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 soundDevice := VA_GetDevice( "capture:" . 1 )
 
 Menu, Tray, NoStandard
-Menu, Tray, Add, Microphone Mute,toggleMute
+Menu, Tray, Add, Microphone Mute,menuMute
 Menu, Tray, Default, Microphone Mute
 Menu, Tray, Add
 Menu, Tray, Add, E&xit, ExitSub
@@ -33,6 +33,12 @@ Menu, Tray, Icon, imageres.dll, 233, 1
 Menu, Tray, Tip, Mic Live
 
 SetCapsLockState, off
+
+menuMute()
+{
+	soundDevice := VA_GetDevice( "capture:" . 1 )
+	toggleMute(soundDevice)
+}
 
 changeMute(soundDevice)
 	{
@@ -42,7 +48,7 @@ changeMute(soundDevice)
   		SoundBeep, 200
     	Menu, Tray, Icon, imageres.dll, 230, 1   
 		Menu, Tray, Tip, Mic Muted	
-		Menu, Tray, Check, Microphone Mute														
+		Menu, Tray, Check, Microphone Mute											
 		}
 		else 
 		{
