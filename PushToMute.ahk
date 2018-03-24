@@ -11,7 +11,8 @@
 ;	System Tray Icon
 ;   Audible Response to Capslock push 
 ;   Mutes Microphone when Capslock is held down
-;   Toggles Microphone Mute when ` is pressed		
+;   Toggles Microphone Mute when ` is pressed
+;   Double Click tray icon to toggle mute as well		
 
 
 #SingleInstance, force
@@ -31,9 +32,10 @@ Menu, Tray, Add, E&xit, ExitSub
 Menu, Tray, Icon, imageres.dll, 233, 1
 Menu, Tray, Tip, Mic Live
 
-changeMute()
+SetCapsLockState, off
+
+changeMute(soundDevice)
 	{
-		soundDevice := VA_GetDevice( "capture:" . 1 )
 		MuteState :=VA_GetMute(1,soundDevice)
 		if MuteState=1
 		{
@@ -51,9 +53,8 @@ changeMute()
 		}
 	}
 
-toggleMute()
+toggleMute(soundDevice)
 {
- 	soundDevice := VA_GetDevice( "capture:" . 1 )
  	MuteState :=VA_GetMute(1,soundDevice)
 	 	if MuteState=1
 	 	{
@@ -63,11 +64,11 @@ toggleMute()
 	 	{
 	 		VA_SetMute(TRUE,1,soundDevice)
 	 	}
-	changeMute()
+	changeMute(soundDevice)
 	Return
 }
 
-$`::toggleMute()
+$`::toggleMute(soundDevice)
 
 $Capslock:: ;Change this for the button you want to use
 	;THIS IS WHAT IT DOES WHEN YOU PUSH BUTTON 228z
@@ -75,19 +76,19 @@ $Capslock:: ;Change this for the button you want to use
     ;
 	soundDevice := global soundDevice
 	VA_SetMute(TRUE,1,soundDevice)
-	changeMute()
+	changeMute(soundDevice)
 	
 	;THIS IS WHAT IT DOES WHEN YOU RELEASE BUTTON
     KeyWait, Capslock  ;MAKE SURE IF YOU CHANGE THE KEYBINDING BUTTON TO CHANGE THIS
     ;SoundSet, 0, MASTER, MUTE, myMic
     ;
     VA_SetMute(FALSE,1,soundDevice)
-	changeMute()
+	changeMute(soundDevice)
     Return
 
 ExitSub:
     VA_SetMute(FALSE,1,soundDevice)
-	changeMute()
+	changeMute(soundDevice)
     ExitApp
 
 
