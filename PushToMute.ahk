@@ -10,7 +10,8 @@
 ; Script Function:
 ;	System Tray Icon
 ;   Audible Response to Capslock push 
-;   Mic Muted unless capslock is WheelDown		
+;   Mutes Microphone when Capslock is held down
+;   Toggles Microphone Mute when ` is pressed		
 
 
 #SingleInstance, force
@@ -23,16 +24,12 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 soundDevice := VA_GetDevice( "capture:" . 1 )
 
 Menu, Tray, NoStandard
-Menu, Tray, Add, M&ute Mic,ExitSub
-Menu, Tray, ToggleEnable, M&ute Mic
+Menu, Tray, Add, Microphone Mute,toggleMute
+Menu, Tray, Default, Microphone Mute
 Menu, Tray, Add
 Menu, Tray, Add, E&xit, ExitSub
 Menu, Tray, Icon, imageres.dll, 233, 1
 Menu, Tray, Tip, Mic Live
-
-
-
-
 
 changeMute()
 	{
@@ -42,18 +39,20 @@ changeMute()
 		{
   		SoundBeep, 200
     	Menu, Tray, Icon, imageres.dll, 230, 1   
-		Menu, Tray, Tip, Mic Muted																	
+		Menu, Tray, Tip, Mic Muted	
+		Menu, Tray, Check, Microphone Mute														
 		}
 		else 
 		{
 		SoundBeep, 300
 		Menu, Tray, Icon, imageres.dll, 233, 1
 		Menu, Tray, Tip, Mic Live
+		Menu, Tray, Uncheck, Microphone Mute	
 		}
 	}
 
-
-$`::
+toggleMute()
+{
  	soundDevice := VA_GetDevice( "capture:" . 1 )
  	MuteState :=VA_GetMute(1,soundDevice)
 	 	if MuteState=1
@@ -66,8 +65,9 @@ $`::
 	 	}
 	changeMute()
 	Return
+}
 
-
+$`::toggleMute()
 
 $Capslock:: ;Change this for the button you want to use
 	;THIS IS WHAT IT DOES WHEN YOU PUSH BUTTON 228z
@@ -86,8 +86,8 @@ $Capslock:: ;Change this for the button you want to use
     Return
 
 ExitSub:
-    ;SoundSet, 0, , MUTE, myMic
-	;changeMute()
+    VA_SetMute(FALSE,1,soundDevice)
+	changeMute()
     ExitApp
 
 
